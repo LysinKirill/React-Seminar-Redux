@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { selectUserById } from '../features/users/selectors';
 import { updateUserName } from '../features/users/usersSlice';
 
@@ -9,6 +9,11 @@ const UserDetails: React.FC = () => {
     const userId = parseInt(id || '0');
     const user = useSelector(selectUserById(userId));
     const dispatch = useDispatch();
+
+    const navigate = useNavigate();
+    const homePage = () => {
+        navigate('/');
+    }
 
     const [name, setName] = useState(user?.name || '');
 
@@ -28,6 +33,8 @@ const UserDetails: React.FC = () => {
             <p>ID: {user.id}</p>
             <input value={name} onChange={(e) => setName(e.target.value)} />
             <button onClick={handleUpdate}>Update</button>
+            <hr/>
+            <button onClick={homePage}>Home</button>
         </div>
     );
 };
